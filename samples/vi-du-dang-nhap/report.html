@@ -1,0 +1,36 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Báo cáo test - Đăng nhập (VÍ DỤ)</title>
+<style>
+body{font-family:Segoe UI,Arial,sans-serif;margin:0;background:#f4f6f8;color:#222}
+main{max-width:1100px;margin:0 auto;padding:20px 16px}
+h1{margin:0 0 4px} .meta{color:#555;margin-bottom:16px}
+.cards{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
+.card{flex:1;min-width:110px;padding:14px;border-radius:8px;background:#fff;border-left:6px solid #999;display:flex;flex-direction:column}
+.card b{font-size:28px} .pass{border-color:#2e7d32} .fail{border-color:#c62828} .blocked{border-color:#ef6c00} .skip{border-color:#9e9e9e}
+.bar{height:14px;background:#e0e0e0;border-radius:7px;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.filters button{margin:0 6px 8px 0;padding:6px 12px;border:1px solid #bbb;background:#fff;border-radius:16px;cursor:pointer}
+.filters button.on{background:#1f4e78;color:#fff;border-color:#1f4e78}
+table{width:100%;border-collapse:collapse;background:#fff} th,td{border:1px solid #ddd;padding:7px 9px;text-align:left;vertical-align:top;font-size:14px}
+th{background:#1f4e78;color:#fff}
+.tag{padding:2px 8px;border-radius:10px;color:#fff;font-size:12px}
+.tag.pass{background:#2e7d32} .tag.fail{background:#c62828} .tag.blocked{background:#ef6c00} .tag.skip{background:#9e9e9e}
+.bug{background:#fff;border:1px solid #ddd;border-left:5px solid #c62828;border-radius:6px;padding:8px 12px;margin:8px 0}
+.bug summary{cursor:pointer} h2{margin-top:28px}
+@media(max-width:600px){th:nth-child(4),td:nth-child(4){display:none}}
+</style></head><body><main>
+<h1>Báo cáo test: Đăng nhập (VÍ DỤ)</h1>
+<div class="meta">Tester: QC A · Ngày: 2026-11-08 · Môi trường: UAT · Ticket: DEMO-1</div>
+<div class="cards"><div class="card pass"><b>1</b><span>Pass</span></div><div class="card fail"><b>1</b><span>Fail</span></div><div class="card blocked"><b>0</b><span>Blocked</span></div><div class="card skip"><b>0</b><span>Skip</span></div><div class="card"><b>50.0%</b><span>Tỉ lệ Pass (trên TC đã chạy)</span></div></div>
+<div class="bar"><i style="width:50.0%;background:#2e7d32"></i><i style="width:50.0%;background:#c62828"></i><i style="width:0.0%;background:#ef6c00"></i><i style="width:0.0%;background:#9e9e9e"></i></div>
+<p><b>Kết luận:</b> 1 TC fail do thiếu validate email, cần dev sửa trước khi release.</p>
+<h2>Bug (1)</h2><details class="bug" open><summary><b>BUG-01</b> · [Major] Cho phép đăng nhập khi email không có @ <small>(TC: DEMO_LOGIN_TC_002 · Jira: chưa log)</small></summary><p><b>Các bước tái hiện:</b><br>1. Mở /login<br>2. Nhập email: test_login_01auto.test<br>3. Nhập mật khẩu: Test@123<br>4. Click Đăng nhập</p><p><b>Kết quả mong đợi:</b> Báo lỗi Email không hợp lệ</p><p><b>Kết quả thực tế:</b> Đăng nhập thành công</p><p><b>Môi trường:</b> UAT · <b>Bằng chứng:</b> screenshots/bug01.png</p></details>
+<h2>Chi tiết testcase (2)</h2>
+<div class="filters"><button class="on" data-f="">Tất cả</button><button data-f="Fail">Fail</button><button data-f="Blocked">Blocked</button><button data-f="Pass">Pass</button><button data-f="Skip">Skip</button></div>
+<table><thead><tr><th>TC ID</th><th>Tiêu đề</th><th>Kết quả</th><th>Thực tế / ghi chú</th><th>Bug</th></tr></thead><tbody id="rows"><tr data-s="Pass"><td>DEMO_LOGIN_TC_001</td><td>Đăng nhập thành công với tài khoản hợp lệ</td><td><span class="tag pass">Pass</span></td><td></td><td></td></tr><tr data-s="Fail"><td>DEMO_LOGIN_TC_002</td><td>Không đăng nhập được khi email thiếu @</td><td><span class="tag fail">Fail</span></td><td>Hệ thống cho đăng nhập</td><td>BUG-01</td></tr></tbody></table>
+</main><script>
+document.querySelectorAll('.filters button').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+ document.querySelectorAll('#rows tr').forEach(r=>r.style.display=(!b.dataset.f||r.dataset.s===b.dataset.f)?'':'none');});
+</script></body></html>

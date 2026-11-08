@@ -1,0 +1,13 @@
+{
+  "title": "Đăng nhập (VÍ DỤ)", "tester": "QC A", "date": "2026-11-08", "env": "UAT", "ticket": "DEMO-1",
+  "conclusion": "1 TC fail do thiếu validate email, cần dev sửa trước khi release.",
+  "results": [
+    {"tc_id": "DEMO_LOGIN_TC_001", "title": "Đăng nhập thành công với tài khoản hợp lệ", "status": "Pass", "actual": ""},
+    {"tc_id": "DEMO_LOGIN_TC_002", "title": "Không đăng nhập được khi email thiếu @", "status": "Fail", "actual": "Hệ thống cho đăng nhập", "bug_id": "BUG-01"}
+  ],
+  "bugs": [
+    {"id": "BUG-01", "title": "Cho phép đăng nhập khi email không có @", "severity": "Major", "tc_id": "DEMO_LOGIN_TC_002",
+     "steps": ["Mở /login", "Nhập email: test_login_01auto.test", "Nhập mật khẩu: Test@123", "Click Đăng nhập"],
+     "expected": "Báo lỗi Email không hợp lệ", "actual": "Đăng nhập thành công", "evidence": "screenshots/bug01.png"}
+  ]
+}

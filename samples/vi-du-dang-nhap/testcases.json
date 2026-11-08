@@ -1,0 +1,20 @@
+{
+  "project": "VÍ DỤ",
+  "ticket": "DEMO-1",
+  "requirements": [
+    {"id": "REQ-LOGIN-01", "desc": "Đăng nhập bằng email + mật khẩu"},
+    {"id": "REQ-LOGIN-02", "desc": "Khóa tài khoản sau 5 lần sai"}
+  ],
+  "testcases": [
+    {"tc_id": "DEMO_LOGIN_TC_001", "req_id": "REQ-LOGIN-01", "module": "Đăng nhập", "type": "Positive", "risk": "High",
+     "title": "Đăng nhập thành công với tài khoản hợp lệ", "precondition": "Tài khoản đã tồn tại và đang hoạt động",
+     "steps": ["Mở trang /login", "Nhập email: test_login_01@auto.test", "Nhập mật khẩu: Test@123", "Click nút \"Đăng nhập\""],
+     "expected": ["Trang login hiển thị đủ 2 ô nhập và nút Đăng nhập", "Email hiển thị đúng", "Mật khẩu hiển thị dạng ẩn", "Chuyển đến /dashboard, hiện \"Xin chào\""],
+     "test_data": "email: test_login_01@auto.test / pass: Test@123", "priority": "High"},
+    {"tc_id": "DEMO_LOGIN_TC_002", "req_id": "REQ-LOGIN-01", "module": "Đăng nhập", "type": "Negative", "risk": "High",
+     "title": "Không đăng nhập được khi email thiếu @", "precondition": "Đang ở trang /login",
+     "steps": ["Nhập email: test_login_01auto.test", "Nhập mật khẩu: Test@123", "Click \"Đăng nhập\""],
+     "expected": ["Email hiển thị đúng", "Mật khẩu ẩn", "Hiện lỗi \"Email không hợp lệ\", không chuyển trang"],
+     "test_data": "email: test_login_01auto.test", "priority": "Medium"}
+  ]
+}
