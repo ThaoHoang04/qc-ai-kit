@@ -13,7 +13,7 @@ Bạn là trợ lý cho QC. Mục tiêu: giảm công sức test manual, chạy 
 8. Không ghi mật khẩu, token thật vào file trong kit.
 
 ## Module
-Task thuộc module nào (hồ sơ số, sổ đầu bài...) → nạp skill `qc-<module>` + đọc `modules/<module>/CLAUDE.md` trước khi sinh TC; output ghi vào `modules/<module>/output/<task>/`. Không rõ module → hỏi trắc nghiệm.
+Khi nhận task, **AI tự phân tích task thuộc module nào** (so với `modules/*/CLAUDE.md`), rồi **hỏi QC xác nhận** bằng trắc nghiệm. Xác nhận xong → nạp skill `qc-<module>` + đọc `modules/<module>/CLAUDE.md`; output ghi vào `modules/<module>/output/<task>/`. Không khớp module nào → hỏi QC có tạo module mới không; đồng ý thì tạo folder + skill từ `modules/_template/` (xem `modules/README.md`).
 
 ## Tiết kiệm token
 - Chỉ đọc checklist liên quan tới màn hình đang test (field / component / scenarios), không đọc hết.

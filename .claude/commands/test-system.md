@@ -9,6 +9,9 @@ Nạp skill `qc-testcase`. Đầu vào: $ARGUMENTS
 - Không đủ thông tin đăng nhập/quyền → hỏi QC (trắc nghiệm, có Other).
 - **Checklist:** theo skill `qc-testcase` mục 0 — chưa có thì hỏi QC gửi hay AI sinh; với hệ thống mới, AI sinh checklist **theo từng module** và QC duyệt cùng danh sách REQ ở B2.
 
+## B1b. Đối chiếu module với kit
+Với mỗi module khảo sát được, đối chiếu `modules/*/`. Module chưa có folder → hỏi QC (trắc nghiệm) có tạo không; đồng ý → tạo từ `modules/_template/` + skill `qc-<module>` (theo `modules/README.md`), điền phần suy ra được, gắn `[cần xác nhận]`. Output từng module ghi vào `modules/<module>/output/`.
+
 ## B2. Danh sách module + REQ
 Ghi `output/<hệ thống>_<ngày>/requirements.md`: module → REQ (mã `REQ-<MODULE>-<số>`) → rủi ro. Kèm ma trận phân quyền / trạng thái nếu có. **ĐIỂM DỪNG 1 — QC duyệt danh sách module và REQ, chọn module làm trước.**
 

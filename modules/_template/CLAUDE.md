@@ -5,6 +5,9 @@ Bổ sung cho `CLAUDE.md` gốc và skill `qc-testcase`. Skill: `qc-<module>`. C
 - Màn hình/chức năng: [điền]
 - Ngoài phạm vi: [điền]
 
+## Từ khoá nhận diện (để AI xếp task vào module)
+- [điền] tên màn hình, thuật ngữ, component Jira, từ hay gặp trong ticket
+
 ## Vai trò & phân quyền
 | Vai trò | Quyền chính | Tài khoản test (tên biến, KHÔNG ghi mật khẩu) |
 |---|---|---|

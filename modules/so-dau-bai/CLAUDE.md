@@ -5,6 +5,10 @@ Bổ sung cho `CLAUDE.md` gốc và skill `qc-testcase`. Skill: `qc-so-dau-bai`.
 - Màn hình/chức năng: [cần xác nhận] chọn lớp/môn/tiết · ghi nội dung bài · điểm danh/xếp loại tiết · nhận xét · duyệt/khoá sổ
 - Ngoài phạm vi: [điền]
 
+## Từ khoá nhận diện (để AI xếp task vào module)
+- [cần xác nhận] sổ đầu bài, tiết học, nội dung bài, nhận xét tiết, khoá sổ, thời khoá biểu
+- [điền] tên màn hình, thuật ngữ, component Jira, từ hay gặp trong ticket
+
 ## Vai trò & phân quyền
 | Vai trò | Quyền chính | Tài khoản test (tên biến, KHÔNG ghi mật khẩu) |
 |---|---|---|

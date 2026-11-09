@@ -5,6 +5,10 @@ Bổ sung cho `CLAUDE.md` gốc và skill `qc-testcase`. Skill: `qc-ho-so-so`. C
 - Màn hình/chức năng: [cần xác nhận] danh sách hồ sơ · tạo/sửa hồ sơ · đính kèm/xem tệp · duyệt · xuất/in
 - Ngoài phạm vi: [điền]
 
+## Từ khoá nhận diện (để AI xếp task vào module)
+- [cần xác nhận] hồ sơ số, hồ sơ điện tử, tệp đính kèm, kho hồ sơ, duyệt hồ sơ
+- [điền] tên màn hình, thuật ngữ, component Jira, từ hay gặp trong ticket
+
 ## Vai trò & phân quyền
 | Vai trò | Quyền chính | Tài khoản test (tên biến, KHÔNG ghi mật khẩu) |
 |---|---|---|

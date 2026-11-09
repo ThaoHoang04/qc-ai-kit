@@ -4,6 +4,13 @@ argument-hint: <đường dẫn file .xlsx testcase> [phạm vi: module/ID/ưu t
 ---
 Nạp skill `qc-testcase`. Đầu vào: $ARGUMENTS
 
+## B0. Xác định module (làm trước, tự phân tích)
+Theo `modules/README.md` mục "Xác định module": so khớp nội dung đầu vào với `modules/*/CLAUDE.md` (mục Phạm vi + Từ khoá nhận diện).
+- Khớp 1 module → báo 1 dòng "Module: <tên> (lý do)", **hỏi QC xác nhận** (trắc nghiệm: đúng / chọn module khác / task chạm nhiều module).
+- Khớp nhiều module → hỏi QC chọn module chính + module ảnh hưởng chéo.
+- **Không khớp module nào → module mới**: hỏi QC (trắc nghiệm) có tạo module mới không, và tên module. Đồng ý → tạo `modules/<module>/` + skill `qc-<module>` từ `modules/_template/` (xem `modules/README.md` "Thêm module mới"), điền phần suy ra được từ task (gắn `[cần xác nhận]`), **ĐIỂM DỪNG** cho QC duyệt rule/checklist rồi mới đi tiếp.
+- Sau khi chốt: nạp skill `qc-<module>`, đọc `modules/<module>/CLAUDE.md`; output ghi vào `modules/<module>/output/<task>/` (thay cho `output/<task>/` ở các bước dưới).
+
 ## B1. Nạp TC và checklist
 - `python -I scripts/xlsx_to_tc.py "<file.xlsx>" output/<task>/testcases.json` (thêm `--sheet <tên>` nếu nhiều sheet).
 - Báo QC: nhận bao nhiêu TC, cột nào nhận được / không nhận được. Cột sai thì hỏi QC (trắc nghiệm, có Other) cột nào là cột nào.
