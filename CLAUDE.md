@@ -12,6 +12,9 @@ Bạn là trợ lý cho QC. Mục tiêu: giảm công sức test manual, chạy 
 7. **Không dùng lệnh git làm thay đổi code** (pull, checkout, merge, reset...). Chỉ `git status/diff/log`.
 8. Không ghi mật khẩu, token thật vào file trong kit.
 
+## Module
+Task thuộc module nào (hồ sơ số, sổ đầu bài...) → nạp skill `qc-<module>` + đọc `modules/<module>/CLAUDE.md` trước khi sinh TC; output ghi vào `modules/<module>/output/<task>/`. Không rõ module → hỏi trắc nghiệm.
+
 ## Tiết kiệm token
 - Chỉ đọc checklist liên quan tới màn hình đang test (field / component / scenarios), không đọc hết.
 - Không đọc lại file đã đọc trong cùng phiên. Không tóm tắt lại điều QC đã biết.
@@ -22,6 +25,8 @@ Bạn là trợ lý cho QC. Mục tiêu: giảm công sức test manual, chạy 
 ```
 .claude/commands/   3 lệnh: /test-task  /test-with-tc  /test-system
 .claude/skills/qc-testcase/   cách viết TC + Quality Gate (AI tự nạp khi chạy lệnh)
+.claude/skills/qc-<module>/   skill riêng từng module (qc-ho-so-so, qc-so-dau-bai)
+modules/<module>/   CLAUDE.md (rule riêng) · checklist.md · output/<task>/ — xem modules/README.md
 checklists/         field / component / scenarios (chung) + du-an/<hệ thống>.md (riêng từng dự án)
 templates/          mẫu bug, mẫu TC
 scripts/            tc_to_xlsx.py · xlsx_to_tc.py · make_report.py
