@@ -37,11 +37,13 @@
   "title": "Học bạ - task VNEDU-1234", "tester": "QC A", "date": "2026-11-08", "env": "UAT", "ticket": "VNEDU-1234",
   "conclusion": "2 bug Major, chưa nên release.",
   "results": [
-    {"tc_id": "VNEDU_HOCBA_TC_001", "title": "...", "status": "Pass|Fail|Blocked|Skip", "actual": "", "bug_id": "BUG-01"}
+    {"tc_id": "VNEDU_HOCBA_TC_001", "title": "...", "status": "Pass|Fail|Blocked|Skip", "actual": "", "bug_id": "BUG-01", "evidence": ["screenshots/TC_001.png"]}
   ],
   "bugs": [
     {"id": "BUG-01", "title": "...", "severity": "Critical|Major|Minor|Trivial", "tc_id": "...",
-     "steps": ["..."], "expected": "...", "actual": "...", "evidence": "đường dẫn ảnh", "jira": ""}
+     "steps": ["..."], "expected": "...", "actual": "...", "evidence": ["screenshots/BUG-01.png"], "jira": ""}
   ]
 }
 ```
+
+- `evidence`: mảng (hoặc chuỗi) đường dẫn ảnh **tương đối so với thư mục chứa results.json** (vd `screenshots/TC_001.png`). `make_report.py` nhúng ảnh base64 vào `report.html` → mở ở đâu cũng xem được; thiếu file sẽ cảnh báo.

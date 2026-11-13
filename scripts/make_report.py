@@ -4,8 +4,10 @@
 Dùng:  python scripts/make_report.py output/<task>/results.json
 Kết quả: report.html + bugs.md cùng thư mục.
 """
+import base64
 import html
 import json
+import mimetypes
 import sys
 from collections import Counter
 from pathlib import Path
@@ -26,10 +28,34 @@ def lst(v):
     return v or ""
 
 
+def evid_list(v):
+    if not v:
+        return []
+    return v if isinstance(v, list) else [x.strip() for x in str(v).replace(";", ",").split(",") if x.strip()]
+
+
+def imgs(v, base, missing):
+    """Nhúng ảnh thẳng vào HTML (base64) -> mở report ở đâu cũng thấy, không phụ thuộc đường dẫn."""
+    out = []
+    for ev in evid_list(v):
+        f = Path(ev)
+        if not f.is_absolute():
+            f = base / ev
+        if not f.is_file():
+            missing.append(ev)
+            out.append(f'<span class="miss">⚠ thiếu ảnh: {esc(ev)}</span>')
+            continue
+        mime = mimetypes.guess_type(f.name)[0] or "image/png"
+        uri = f"data:{mime};base64,{base64.b64encode(f.read_bytes()).decode()}"
+        out.append(f'<a href="{uri}" target="_blank"><img src="{uri}" alt="{esc(f.name)}" title="{esc(f.name)}"></a>')
+    return f'<div class="evi">{"".join(out)}</div>' if out else ""
+
+
 def main(path):
     src = Path(path)
     d = json.loads(src.read_text(encoding="utf-8"))
     results, bugs = d.get("results", []), d.get("bugs", [])
+    base, missing = src.parent, []
     count = Counter(r.get("status", "Skip") for r in results)
     total = len(results) or 1
     done = count["Pass"] + count["Fail"]
@@ -42,7 +68,7 @@ def main(path):
     rows = "".join(
         f'<tr data-s="{esc(r.get("status"))}"><td>{esc(r.get("tc_id"))}</td><td>{esc(r.get("title"))}</td>'
         f'<td><span class="tag {STATUS_CLASS.get(r.get("status"), "skip")}">{esc(r.get("status"))}</span></td>'
-        f'<td>{esc(r.get("actual"))}</td><td>{esc(r.get("bug_id"))}</td></tr>'
+        f'<td>{esc(r.get("actual"))}{imgs(r.get("evidence"), base, missing)}</td><td>{esc(r.get("bug_id"))}</td></tr>'
         for r in results
     )
     bug_html = "".join(
@@ -51,7 +77,7 @@ def main(path):
         f'<p><b>Các bước tái hiện:</b><br>{esc(lst(b.get("steps")))}</p>'
         f'<p><b>Kết quả mong đợi:</b> {esc(b.get("expected"))}</p>'
         f'<p><b>Kết quả thực tế:</b> {esc(b.get("actual"))}</p>'
-        f'<p><b>Môi trường:</b> {esc(b.get("env") or d.get("env"))} · <b>Bằng chứng:</b> {esc(b.get("evidence"))}</p></details>'
+        f'<p><b>Môi trường:</b> {esc(b.get("env") or d.get("env"))} · <b>Bằng chứng:</b> {esc(", ".join(evid_list(b.get("evidence"))))}</p>{imgs(b.get("evidence"), base, missing)}</details>'
         for b in bugs
     ) or "<p>Không có bug.</p>"
 
@@ -74,6 +100,8 @@ th{{background:#1f4e78;color:#fff}}
 .tag{{padding:2px 8px;border-radius:10px;color:#fff;font-size:12px}}
 .tag.pass{{background:#2e7d32}} .tag.fail{{background:#c62828}} .tag.blocked{{background:#ef6c00}} .tag.skip{{background:#9e9e9e}}
 .bug{{background:#fff;border:1px solid #ddd;border-left:5px solid #c62828;border-radius:6px;padding:8px 12px;margin:8px 0}}
+.evi{{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}} .evi img{{max-width:240px;max-height:160px;border:1px solid #ccc;border-radius:4px;cursor:zoom-in}}
+.miss{{color:#c62828;font-size:12px}}
 .bug summary{{cursor:pointer}} h2{{margin-top:28px}}
 @media(max-width:600px){{th:nth-child(4),td:nth-child(4){{display:none}}}}
 </style></head><body><main>
@@ -100,6 +128,8 @@ document.querySelectorAll('.filters button').forEach(b=>b.onclick=()=>{{
                   f"- Môi trường: {b.get('env') or d.get('env')}\n\n**Các bước:**\n{lst(b.get('steps'))}\n\n"
                   f"**Mong đợi:** {b.get('expected')}\n\n**Thực tế:** {b.get('actual')}\n\n**Bằng chứng:** {b.get('evidence')}\n")
     src.with_name("bugs.md").write_text("\n".join(md), encoding="utf-8")
+    if missing:
+        print(f"CẢNH BÁO: {len(missing)} ảnh không tìm thấy (đường dẫn tính từ thư mục chứa results.json): {missing}")
     print(f"OK: {out}  | Pass {count['Pass']} · Fail {count['Fail']} · Blocked {count['Blocked']} · Skip {count['Skip']} · {len(bugs)} bug")
 
 
