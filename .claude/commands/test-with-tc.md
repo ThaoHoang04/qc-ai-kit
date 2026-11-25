@@ -15,12 +15,14 @@ Theo `modules/README.md` mục "Xác định module": so khớp nội dung đầ
 - `python -I scripts/xlsx_to_tc.py "<file.xlsx>" output/<task>/testcases.json` (thêm `--sheet <tên>` nếu nhiều sheet).
 - Báo QC: nhận bao nhiêu TC, cột nào nhận được / không nhận được. Cột sai thì hỏi QC (trắc nghiệm, có Other) cột nào là cột nào.
 - Checklist: không bắt buộc để chạy TC có sẵn, nhưng hỏi QC (trắc nghiệm) có muốn AI **đối chiếu độ phủ** TC với checklist không: *QC gửi checklist* / *AI sinh checklist từ TC + tài liệu* / *Không cần*. Nếu có → báo mục checklist chưa có TC nào bao phủ.
+- Hỏi môi trường cần check (`s99` / `s19` / `prod`, checkbox) theo skill `qc-testcase` mục 0a.
 - Hỏi phạm vi chạy bằng câu trắc nghiệm (tất cả / theo module / theo ưu tiên High / danh sách ID). **ĐIỂM DỪNG 1.**
 
 ## B2. Chạy test theo phạm vi
+- Tài khoản đăng nhập: lấy từ `acc.yaml` trước, không có mới hỏi (CLAUDE.md mục "Tài khoản test").
 - Mặc định **không sửa nội dung TC gốc**. Nếu thấy TC lỗi thời/sai → ghi vào danh sách "TC cần cập nhật" cho QC quyết.
 - Chạy theo từng nhóm 10–15 TC: có Playwright MCP và QC cho phép → AI chạy; không thì QC báo kết quả ngắn `TC_001 pass; TC_002 fail: ...`. Ghi vào `results.json` sau mỗi nhóm.
 
 ## B3. Bug & báo cáo
-Giống `/test-task` B5, B6: soạn bug cho TC Fail → QC xác nhận → (Jira MCP) log → `make_report.py`.
+Giống `/test-task` B5, B6: soạn bug cho TC Fail → QC xác nhận (`AskUserQuestion`, có Other) → (Jira MCP) log → `make_report.py`.
 Thêm vào báo cáo phần "TC cần cập nhật" (nếu có) trong `conclusion`.

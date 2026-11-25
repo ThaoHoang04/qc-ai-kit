@@ -1,0 +1,9 @@
+# Mẫu cho acc.yaml (file mẫu được commit — chỉ để dữ liệu giả).
+# Lần đầu: copy file này thành acc.yaml rồi điền tài khoản thật.
+# cap: cấp học của trường (vd 1, 2, 3)
+
+accounts:
+  - ten_tai_khoan: "tai_khoan_mau"
+    mat_khau: "mat_khau_mau"
+    link_truong: "truong-mau.example.vn"   # link prod, không thêm s99./s19.
+    cap: "1"

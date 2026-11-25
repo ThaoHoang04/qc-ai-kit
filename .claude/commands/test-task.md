@@ -15,22 +15,26 @@ Theo `modules/README.md` mục "Xác định module": so khớp nội dung đầ
 - Có Jira key và Jira MCP đã kết nối → đọc ticket (mô tả, acceptance criteria, comment, file đính kèm quan trọng). Không có MCP → xin QC dán mô tả.
 - Xác định hệ thống (không rõ thì hỏi trắc nghiệm).
 - **Checklist:** tìm theo skill `qc-testcase` mục 0. Chưa có → hỏi QC: gửi checklist hay AI sinh. **ĐIỂM DỪNG 0** cho tới khi có checklist (hoặc QC chọn bỏ qua).
+- Có checklist xong → hỏi môi trường cần check (`s99` / `s19` / `prod`, checkbox) theo skill mục 0a.
 - Tạo thư mục `output/<TICKET>_<mô-tả-ngắn>/`.
 
 ## B2. Phân tích (ngắn)
 Rút danh sách REQ + xếp rủi ro. Nếu có điểm mơ hồ **chặn** việc viết TC → hỏi QC bằng câu trắc nghiệm (`AskUserQuestion`, có Other) rồi **ĐIỂM DỪNG 1**. Không chặn thì ghi giả định và đi tiếp.
 
 ## B3. Sinh TC
+**Trước khi sinh:** hỏi loại TC (happy / unhappy / toàn bộ, chọn bằng checkbox) theo skill mục 0b.
 Theo skill: ghi `testcases.json` → chạy `python -I scripts/tc_to_xlsx.py output/<task>/testcases.json` → chạy Quality Gate, bổ sung nếu thiếu.
 Chat chỉ báo: đường dẫn `.xlsx`, số TC theo Positive/Negative/Boundary, REQ nào còn yếu, giả định đã dùng.
-**ĐIỂM DỪNG 2 — QC review/bổ sung TC.** QC sửa trong Excel (hoặc nhắn AI sửa). Nếu QC sửa Excel: chạy `scripts/xlsx_to_tc.py` để đồng bộ lại json.
+**ĐIỂM DỪNG 2 — QC review/bổ sung TC.** Hỏi bằng `AskUserQuestion`: *Duyệt, chạy test* / *Đã sửa Excel, đồng bộ rồi chạy* / *Cần AI bổ sung/sửa TC* (Other: nhập ý cần sửa). Nếu QC sửa Excel: chạy `scripts/xlsx_to_tc.py` để đồng bộ lại json.
 
 ## B4. Chạy test & ghi kết quả
+- Tài khoản đăng nhập: lấy từ `acc.yaml` trước, không có mới hỏi (CLAUDE.md mục "Tài khoản test").
+- Chưa rõ ai chạy → hỏi bằng `AskUserQuestion`: *AI chạy* / *QC tự test*. Cần QC đăng nhập/OTP → hỏi: *Đã đăng nhập xong* / *Chưa đăng nhập được* / *Bỏ qua phần này*.
 - Có Playwright MCP và QC cho phép → AI chạy các bước UI, chụp ảnh bằng chứng vào `output/<task>/screenshots/`.
 - Không thì QC tự test; QC báo kết quả dạng ngắn: `TC_001 pass; TC_002 fail: <thực tế>; TC_003 blocked: <lý do>`. AI ghi vào `results.json`.
 
 ## B5. Bug
-Với mỗi TC Fail: soạn bug theo `templates/bug_template.md`, ghi vào `results.json`. **ĐIỂM DỪNG 3 — QC xác nhận từng bug** (sửa/bỏ/gộp).
+Với mỗi TC Fail: soạn bug theo `templates/bug_template.md`, ghi vào `results.json`. **ĐIỂM DỪNG 3 — QC xác nhận từng bug** bằng `AskUserQuestion`, mỗi bug 1 câu (tối đa 4 câu/lượt): *Log bug* / *Bỏ* / *Gộp với bug khác* (Other: nội dung cần sửa).
 Sau khi QC đồng ý và có Jira MCP → tạo issue Bug (gắn link ticket gốc), ghi key vào trường `jira`. Không có MCP → để QC dán từ `bugs.md`.
 
 ## B6. Báo cáo

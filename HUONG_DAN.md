@@ -15,6 +15,8 @@
 
 Không có Jira MCP: dán thẳng mô tả task thay cho Jira key.
 
+Tạo dự án mới có cấu trúc y hệt (không kèm tài khoản, kết quả test): `/tao-du-an D:\duong-dan\du-an-moi`.
+
 ## Luồng làm việc của QC (3 điểm bạn quyết định)
 ```
 Đưa task  →  AI sinh TC (Excel)  →  [1] QC review, bổ sung
